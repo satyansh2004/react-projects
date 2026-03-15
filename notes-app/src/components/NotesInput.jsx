@@ -10,8 +10,8 @@ function NotesInput({ handleAdd, textInput, handleTextOnchange }) {
       >
         <textarea
           id="notes"
-          className="p-3 px-4 border border-1 border-gray-600 rounded-md text-gray-800 bg-white w-full"
-          rows={10}
+          className="p-3 px-4 border border-1 border-gray-600 rounded-md text-gray-800 bg-white w-full resize-none"
+          rows={5}
           placeholder="Enter your notes here"
           value={textInput}
           onChange={handleTextOnchange}

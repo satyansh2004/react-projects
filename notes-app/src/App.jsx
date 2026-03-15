@@ -1,10 +1,20 @@
-import React, { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import NotesInput from "./components/NotesInput";
 import Notes from "./components/Notes";
 function App() {
   const [note, setNote] = useState("");
-  const [allNotes, setAllNotes] = useState([]);
-  const [darkMode, setDarkMode] = useState(false);
+
+
+  const [allNotes, setAllNotes] = useState(() => {
+    const saved = localStorage.getItem("notes")
+    return saved ? JSON.parse(saved) : []
+  });
+
+
+  const [darkMode, setDarkMode] = useState(() => {
+    const saveTheme = localStorage.getItem("theme");
+    return saveTheme ? JSON.parse(saveTheme) : true;
+  });
 
   const isNoteValid = note.length !== 0;
 
@@ -15,13 +25,23 @@ function App() {
       setNote("");
     }
   };
+  
+  useEffect(() => {
+    localStorage.setItem("notes", JSON.stringify(allNotes)) || []
+  }, [allNotes])
+  
+  useEffect(() => {
+    localStorage.setItem("theme", JSON.stringify(darkMode)) || true
+  }, [darkMode])
 
   const handleTextOnchange = (e) => {
     setNote(e.target.value);
   };
 
+
   const handleDelete = (index) => {
-    setAllNotes(allNotes.filter((_, i) => i !== index));
+    setAllNotes(JSON.parse(localStorage.getItem("notes")).filter((_, i) => i !== index));
+    localStorage.setItem("notes", JSON.stringify(allNotes)) || []
   };
 
   const headingRef = useRef()
