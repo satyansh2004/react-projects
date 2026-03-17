@@ -1,1 +1,1 @@
-# React Todo App
+# Color Picker App
